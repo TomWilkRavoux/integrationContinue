@@ -13,8 +13,8 @@
             <nav>
                 <ul class="flex space-x-6">
                     <li><a href="index.html" class="text-gray-700 hover:text-blue-600">Accueil</a></li>
-                    <li><a href="actualite.html" class="text-gray-700 hover:text-blue-600">Actualités</a></li>
-                    <li><a href="membre.html" class="text-gray-700 hover:text-blue-600">Membres du Bureau</a></li>
+                    <li><a href="actualites.html" class="text-gray-700 hover:text-blue-600">Actualités</a></li>
+                    <li><a href="membres.html" class="text-gray-700 hover:text-blue-600">Membres du Bureau</a></li>
                 </ul>
             </nav>
         </div>
@@ -24,16 +24,14 @@
     <section id="membres-bureau" class="container mx-auto px-4 py-8">
         <h1 class="text-3xl font-bold mb-6">Membres du Bureau</h1>
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Boucle sur les membres -->
+            {% for membre in membres %}
             <div class="bg-white rounded-lg shadow-md p-4">
-                <img src="membre1.jpg" alt="Photo du membre 1" class="w-full h-48 object-cover rounded-t-lg">
-                <h3 class="mt-4 text-xl font-semibold">Nom du Membre 1</h3>
-                <p>Rôle : Président</p>
+                <img src="{{ membre['image'] }}" alt="Photo de {{ membre['prénom'] }} {{ membre['nom'] }}" class="w-full h-48 object-cover rounded-t-lg">
+                <h3 class="mt-4 text-xl font-semibold">{{ membre['prénom'] }} {{ membre['nom'] }}</h3>
+                <p>Rôle : {{ membre['fonction'] }}</p>
             </div>
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <img src="membre2.jpg" alt="Photo du membre 2" class="w-full h-48 object-cover rounded-t-lg">
-                <h3 class="mt-4 text-xl font-semibold">Nom du Membre 2</h3>
-                <p>Rôle : Trésorier</p>
-            </div>
+            {% endfor %}
         </div>
     </section>
 

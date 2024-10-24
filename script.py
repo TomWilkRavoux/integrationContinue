@@ -2,6 +2,7 @@ import csv
 import markdown
 from jinja2 import Template
 import os 
+import glob
 
 
 #Lire un fichier .md et le convertir en html 
@@ -36,33 +37,58 @@ def generate_index(md_file, csv_file):
     }
     generate_page('templates/index_template.html', 'output/index.html', context)
 
-# Génération de la page des membres du bureau
+# Générer la page des membres du bureau avec image
 def generate_membres(csv_file):
     membres = read_csv(csv_file)
     
+    # Context pour les membres
     context = {
         'membres': membres
     }
     
+    # Générer la page HTML des membres
     generate_page('templates/membres_template.html', 'output/membres.html', context)
+    print(f"Généré : output/membres.html")
+
 
 # Génération de la page de détail d'une actualité
 def generate_actualite(md_file):
     actualite_html = md_to_html(md_file)
     
     context = {
-        'actualite_html': actualite_html
+        'actualites_html': actualite_html
     }
     
-    generate_page('templates/actualite_template.html', 'output/actualite.html', context)
+    generate_page('templates/actualites_template.html', 'output/actualite.html', context)
+
+# Fonction pour générer les pages d'actualité pour chaque fichier Markdown trouvé
+def generate_all_actualites(md_directory):
+    # Utiliser glob pour récupérer tous les fichiers .md dans le répertoire spécifié
+    md_files = glob.glob(os.path.join(md_directory, '*.md'))
+    
+    # Parcourir chaque fichier Markdown
+    for md_file in md_files:
+        actualite_html = md_to_html(md_file)  # Convertir le fichier .md en HTML
+        
+        # Extraire un nom de fichier sans l'extension pour la sortie
+        output_filename = os.path.basename(md_file).replace('.md', '.html')
+        
+        context = {
+            'actualite_html': actualite_html
+        }
+        
+        # Générer une page HTML pour chaque actualité
+        generate_page('templates/actualites_template.html', f'output/{output_filename}', context)
+        print(f"Généré : output/{output_filename}")
+
 
 if __name__ == "__main__":
-    # Chemins vers les fichiers Markdown et CSV
-    md_file = './asset/2025-01-18-evenement-1.md'
-    csv_file = './asset/membres-bureau-association.csv'
+    # Chemins vers les répertoires de fichiers Markdown et CSV
+    md_directory = './asset'  # Répertoire contenant les fichiers .md
     membres_csv = './asset/membres-bureau-association.csv'
     
-    # Génération des pages
-    generate_index(md_file, csv_file)
+
+    
+    generate_index(os.path.join(md_directory, '2025-01-18-evenement-1.md'), membres_csv)
     generate_membres(membres_csv)
-    generate_actualite(md_file)
+    generate_all_actualites(md_directory)  # Traiter tous les fichiers .md
