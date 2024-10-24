@@ -81,6 +81,33 @@ def generate_all_actualites(md_directory):
         generate_page('templates/actualites_template.html', f'output/{output_filename}', context)
         print(f"Généré : output/{output_filename}")
 
+# Génération de la page des événements listant chaque actualité 
+def generate_actualites_list(md_directory):
+    md_files = glob.glob(os.path.join(md_directory, '*.md'))
+    actualites = []
+
+    for md_file in md_files:
+        # Extraire le nom de l'événement à partir du fichier Markdown (on part du principe que le nom du fichier inclut une date et un titre)
+        filename = os.path.basename(md_file)
+        title = filename.replace('-', ' ').replace('.md', '').capitalize()
+        
+        # Créer un lien vers le fichier HTML correspondant
+        link = filename.replace('.md', '.html')
+        
+        # Ajouter les informations sur l'événement dans la liste
+        actualites.append({
+            'title': title,
+            'link': link
+        })
+
+    # Générer la page HTML à partir d'un template
+    context = {
+        'actualites': actualites
+    }
+    
+    generate_page('templates/actualites_list_template.html', 'output/actualites.html', context)
+    print(f"Généré : output/actualites.html")
+
 
 if __name__ == "__main__":
     # Chemins vers les répertoires de fichiers Markdown et CSV
@@ -92,3 +119,4 @@ if __name__ == "__main__":
     generate_index(os.path.join(md_directory, '2025-01-18-evenement-1.md'), membres_csv)
     generate_membres(membres_csv)
     generate_all_actualites(md_directory)  # Traiter tous les fichiers .md
+    generate_actualites_list(md_directory)
