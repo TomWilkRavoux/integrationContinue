@@ -32,7 +32,7 @@ def generate_index(md_file, csv_file):
     actualites = read_csv(csv_file)
 
     context = {
-        'actualites_html': actualites_html,
+        'actualite_html': actualites_html,
         'actualites': actualites
     }
     generate_page('templates/index_template.html', 'output/index.html', context)
@@ -56,7 +56,7 @@ def generate_actualite(md_file):
     actualite_html = md_to_html(md_file)
     
     context = {
-        'actualites_html': actualite_html
+        'actualite_html': actualite_html
     }
     
     generate_page('templates/actualites_template.html', 'output/actualite.html', context)

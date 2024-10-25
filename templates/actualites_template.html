@@ -20,35 +20,15 @@
         </div>
     </header>
 
-    <!-- Détail de l'actualité -->
-
-    <section id="membres-bureau" class="container mx-auto px-4 py-8">
-        <h1 class="text-3xl font-bold mb-6">Articles</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <img src="membre1.jpg" alt="Photo Article" class="w-full h-48 object-cover rounded-t-lg">
-                <h3 class="mt-4 text-xl font-semibold">Nom Article</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe omnis aliquam reiciendis tempore laborum minima accusamus aspernatur magnam, sed, itaque perspiciatis facilis quisquam optio. Ea accusamus reiciendis laborum a minima.
-                </p>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <img src="membre2.jpg" alt="Photo Article" class="w-full h-48 object-cover rounded-t-lg">
-                <h3 class="mt-4 text-xl font-semibold">Nom Article</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe omnis aliquam reiciendis tempore laborum minima accusamus aspernatur magnam, sed, itaque perspiciatis facilis quisquam optio. Ea accusamus reiciendis laborum a minima.
-                </p>
-            </div>
-            <div class="bg-white rounded-lg shadow-md p-4">
-                <img src="membre2.jpg" alt="Photo Article" class="w-full h-48 object-cover rounded-t-lg">
-                <h3 class="mt-4 text-xl font-semibold">Nom Article</h3>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe omnis aliquam reiciendis tempore laborum minima accusamus aspernatur magnam, sed, itaque perspiciatis facilis quisquam optio. Ea accusamus reiciendis laborum a minima.
-                </p>            
-            </div>
+    <!-- Détail de l'actualité dynamique -->
+    <section class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold mb-6">Détail de l'actualité</h1>
+        
+        <!-- Contenu de l'actualité injecté ici -->
+        <div class="bg-white rounded-lg shadow-md p-4">
+            {{ actualite_html|safe }}
         </div>
     </section>
-
 
     <!-- Commentaires ou galerie d'images -->
     <section id="commentaires" class="bg-gray-50 py-8">
