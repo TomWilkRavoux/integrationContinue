@@ -4,6 +4,9 @@ from jinja2 import Template
 import os 
 import glob
 
+# Définir le répertoire de sortie global
+output_dir = "wwwroot"
+os.makedirs(output_dir, exist_ok=True)  # Créer le répertoire s'il n'existe pas
 
 #Lire un fichier .md et le convertir en html 
 def md_to_html(md_file):
