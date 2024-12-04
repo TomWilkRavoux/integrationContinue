@@ -1,0 +1,41 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main  # Déclenche le pipeline sur chaque push vers la branche principale
+  pull_request:
+    branches:
+      - main  # Déclenche aussi sur les pull requests vers la branche principale
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Étape 1 : Cloner le repo
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Étape 2 : Installer Python
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.x  # Remplace par la version Python que tu utilises
+
+      # Étape 3 : Installer les dépendances
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Étape 4 : Générer les fichiers HTML
+      - name: Generate HTML files
+        run: python script.py
+
+      # Étape 5 : Déployer les fichiers générés (par exemple, sur GitHub Pages)
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./output  # Répertoire généré
