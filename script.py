@@ -6,9 +6,9 @@ import glob
 
 # Définir le répertoire de base et de sortie
 base_dir = os.path.dirname(os.path.abspath(__file__))
-os.chdir(base_dir)  # Change le répertoire de travail
+os.chdir(base_dir)  
 output_dir = os.path.join(base_dir, 'wwwroot')
-os.makedirs(output_dir, exist_ok=True)  # Créer le répertoire s'il n'existe pas
+os.makedirs(output_dir, exist_ok=True)  
 
 # Lire un fichier .md et le convertir en HTML
 def md_to_html(md_file):
