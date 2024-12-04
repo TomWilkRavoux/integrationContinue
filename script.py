@@ -4,30 +4,40 @@ from jinja2 import Template
 import os 
 import glob
 
-# Définir le répertoire de sortie global
-output_dir = "wwwroot"
+# Définir le répertoire de base et de sortie
+base_dir = os.path.dirname(os.path.abspath(__file__))
+os.chdir(base_dir)  # Change le répertoire de travail
+output_dir = os.path.join(base_dir, 'wwwroot')
 os.makedirs(output_dir, exist_ok=True)  # Créer le répertoire s'il n'existe pas
 
-#Lire un fichier .md et le convertir en html 
+# Lire un fichier .md et le convertir en HTML
 def md_to_html(md_file):
+    if not os.path.exists(md_file):
+        print(f"Erreur : Le fichier {md_file} est introuvable.")
+        exit(1)
     with open(md_file, 'r', encoding='utf-8') as f:
         text = f.read()
-    return markdown.markdown(text)    
+    return markdown.markdown(text)
 
-#Lire un fichier csv et retourne une liste de dico
+# Lire un fichier CSV et retourner une liste de dictionnaires
 def read_csv(csv_file):
+    if not os.path.exists(csv_file):
+        print(f"Erreur : Le fichier {csv_file} est introuvable.")
+        exit(1)
     with open(csv_file, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         return list(reader)
 
-# Générer une page html a partir d'un template et de donnée    
+# Générer une page HTML à partir d'un template et de données
 def generate_page(template_file, output_file, context):
-    with open(template_file,  'r', encoding='utf-8') as f:
+    with open(template_file, 'r', encoding='utf-8') as f:
         template = Template(f.read())
     html_content = template.render(context)
 
-    with open(output_file, 'w', encoding='utf-8') as f:
-        f.write(html_content) 
+    output_path = os.path.join(output_dir, output_file)
+    os.makedirs(os.path.dirname(output_path), exist_ok=True)  # Créer les sous-dossiers nécessaires
+    with open(output_path, 'w', encoding='utf-8') as f:
+        f.write(html_content)
 
 #Génération de la homepage (avec actualité)
 def generate_index(md_file, csv_file):
