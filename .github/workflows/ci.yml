@@ -3,10 +3,10 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - main  # Déclenche le pipeline sur chaque push vers la branche principale
+      - main
   pull_request:
     branches:
-      - main  # Déclenche aussi sur les pull requests vers la branche principale
+      - main
 
 jobs:
   build:
@@ -21,7 +21,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v4
         with:
-          python-version: 3.x  # Remplace par la version Python que tu utilises
+          python-version: 3.12.6  
 
       # Étape 3 : Installer les dépendances
       - name: Install dependencies
@@ -33,9 +33,9 @@ jobs:
       - name: Generate HTML files
         run: python script.py
 
-      # Étape 5 : Déployer les fichiers générés (par exemple, sur GitHub Pages)
+      # Étape 5 : Déployer les fichiers générés (si besoin)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./output  # Répertoire généré
+          publish_dir: ./output
