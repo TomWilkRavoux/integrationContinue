@@ -40,18 +40,22 @@ jobs:
           sudo apt-get install -y tidy
           tidy -e wwwroot/*.html || exit 1
 
-      # Étape 6 : Test de fumée avec curl
+      # Étape 6 : Démarrer un serveur web temporaire
+      - name: Start temporary web server
+        run: |
+          python3 -m http.server 5500 &
+          sleep 3
+        working-directory: ./wwwroot 
+
+      # Étape 7 : Test de fumée avec curl
       - name: Smoke Test
         run: |
           sudo apt-get update
           sudo apt-get install -y curl
-          curl -I http://127.0.0.1:5500/tp1/siteWeb/integrationContinue/wwwroot/ || exit 1
-        # Optionnel : démarrez un serveur web temporaire si nécessaire
-        # working-directory: ./wwwroot
-        # background: true
-        # run: python3 -m http.server 8000    
+          curl -I http://127.0.0.1:5500 || exit 1
 
-      # Étape 7: Déployer les fichiers générés (si besoin)
+
+      # Étape 8 : Déployer les fichiers générés (si besoin)
       - name: Deploy to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v3
