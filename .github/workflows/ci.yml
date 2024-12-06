@@ -28,6 +28,8 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install playwright
+          playwright install
 
       # Étape 4 : Générer les fichiers HTML
       - name: Generate HTML files
@@ -54,8 +56,12 @@ jobs:
           sudo apt-get install -y curl
           curl -I http://127.0.0.1:5500 || exit 1
 
+      # Étape 8 : Tests fonctionnels avec Playwright
+      - name: Run functional tests
+        run: |
+          pytest tests/test_functional.py
 
-      # Étape 8 : Déployer les fichiers générés (si besoin)
+      # Étape 9 : Déployer les fichiers générés (si besoin)
       - name: Deploy to GitHub Pages
         if: success()
         uses: peaceiris/actions-gh-pages@v3
