@@ -6,7 +6,9 @@ def test_page_loads():
         page = browser.new_page()
         
 
-        page.goto("http://127.0.0.1:5500/wwwroot")
+        # page.goto("http://127.0.0.1:5500/wwwroot")
+        page.goto("http://127.0.0.1:5500", wait_until="networkidle")
+
         
         
         assert "Vivre aux Lilas - Accueil" in page.title()
@@ -23,7 +25,9 @@ def test_menu_links():
         page = browser.new_page()
         
         
-        page.goto("http://127.0.0.1:5500/wwwroot")
+        # page.goto("http://127.0.0.1:5500/wwwroot")
+        page.goto("http://127.0.0.1:5500", wait_until="networkidle")
+
         
         
         links = page.locator("nav ul li a")
